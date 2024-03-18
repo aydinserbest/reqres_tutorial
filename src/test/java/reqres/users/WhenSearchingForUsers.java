@@ -35,19 +35,37 @@ class WhenSearchingForUsers {
                                     .body("page", equalTo(1))
                     .body("per_page", equalTo(6))
                     .body("total_pages", equalTo(2));
+
+            List<String> userEmails = RestAssured.get("https://reqres.in/api/users").jsonPath().get("data.email");
+
+            assertThat(userEmails).doesNotHaveDuplicates()
+                    .allMatch(email -> email.endsWith("@reqres.in"));
         }
         @Test
         @DisplayName("should return the correct page numbers and pagination details")
         void checkPagination(){
-            List<Map<String, Object>> data = RestAssured.get("https://reqres.in/api/users").jsonPath().get("data");
-            for (Map<String, Object> user : data) {
-                String firstName = (String) user.get("first_name");
-                String lastName = (String) user.get("last_name");
-                Number id = (Number) user.get("id");
+
+            List<String> userEmails = RestAssured.get("https://reqres.in/api/users").jsonPath().get("data.email");
+
+            assertThat(userEmails).doesNotHaveDuplicates()
+                    .allMatch(email -> email.endsWith("@reqres.in"));
+            //the difference with below is:
+            // chain assert.
+        }
+        @Test
+        @DisplayName("should return the correct page numbers and pagination details")
+        void checkPagination2(){
+            // all data-all json arrays into List<Map<String, Object>>
+            List<Map<String, String>> data = RestAssured.get("https://reqres.in/api/users").jsonPath().get("data");
+            for (Map<String, String > user : data) {
+                String firstName = user.get("first_name");
+                String lastName = user.get("last_name");
+                String id = user.get("id");
                 String email = (String) user.get("email");
 
                 System.out.printf("User %s %s (ID: %s) has email: %s\n", firstName, lastName, id, email);
             }
+            // only emails into List<String>
             List<String> userEmails = RestAssured.get("https://reqres.in/api/users").jsonPath().get("data.email");
             userEmails.forEach(System.out::println);
 
