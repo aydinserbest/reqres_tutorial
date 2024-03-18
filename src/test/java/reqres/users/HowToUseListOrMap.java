@@ -34,12 +34,15 @@ class HowToUseListOrMap {
 
             //3-
 
-            Map<String, String> firstUser = SerenityRest.get("https://reqres.in/api/users").jsonPath().get("data[0]");
+            Map<String, Object> firstUser = SerenityRest.get("https://reqres.in/api/users").jsonPath().get("data[0]");
 
             firstUser.forEach((key, value) -> System.out.println(key + ": " + value));
 
-            String email = firstUser.get("email");
+            Object email = firstUser.get("email");
             System.out.println(email);
+
+            String firstName = SerenityRest.get("https://reqres.in/api/users").jsonPath().get("data[0].first_name");
+            System.out.println(firstName);
 
 
         }
