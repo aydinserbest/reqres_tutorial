@@ -6,6 +6,6 @@ public record ApiResponse(int page,
                           int per_page,
                           int total,
                           int total_pages,
-                          List<User> data,
+                          List<UserDetail> data,
                           Support support) {
 }

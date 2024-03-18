@@ -3,12 +3,13 @@ package reqres.users;
 import net.serenitybdd.rest.SerenityRest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import reqres.users.domain.ApiResponse;
-import reqres.users.domain.User;
+import reqres.users.domain.*;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestWithDomainObjects {
     @Test
@@ -16,7 +17,7 @@ public class TestWithDomainObjects {
     void getAllUsersWithDomainObject() {
         ApiResponse apiResponse = SerenityRest.get("https://reqres.in/api/users").as(ApiResponse.class);
 
-        List<String> userEmails = apiResponse.data().stream().map(User::email).toList();
+        List<String> userEmails = apiResponse.data().stream().map(UserDetail::email).toList();
 
         /*
         List<String> userEmails = new ArrayList<>();
@@ -26,14 +27,35 @@ public class TestWithDomainObjects {
         */
 
 
-
         assertThat(userEmails).doesNotHaveDuplicates()
                 .allMatch(email -> email.endsWith("@reqres.in"));
 
-        List<User> userData = apiResponse.data();
-        assertThat(userData).hasSize(6);
+        List<UserDetail> userDetailData = apiResponse.data();
+        assertThat(userDetailData).hasSize(6);
 
-        User firstUser = userData.get(0);
-        System.out.println(firstUser.first_name());
+        UserDetail firstUserDetail = userDetailData.get(0);
+        System.out.println(firstUserDetail.first_name());
+    }
+
+    @Test
+    @DisplayName("should send response with domain objects")
+    void shouldCreateUser() {
+        // Given
+        UserCreate userToCreate = ApiResponseFactory.createRandomUserToCreate();
+
+        // When
+        UserCreateResponse userCreateResponse = ApiResponseFactory.createRandomUserCreateResponse();
+        // Then
+        assertNotNull(userCreateResponse);
+        assertEquals(userToCreate.name(), userCreateResponse.name());
+        assertEquals(userToCreate.job(), userCreateResponse.job());
+        assertNotNull(userCreateResponse.id());
+        assertNotNull(userCreateResponse.createdAt());
+
     }
 }
+
+
+
+
+
