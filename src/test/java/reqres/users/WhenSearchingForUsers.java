@@ -1,11 +1,7 @@
 package reqres.users;
 
-import com.google.gson.JsonArray;
 import io.restassured.RestAssured;
 import net.serenitybdd.junit5.SerenityJUnit5Extension;
-import org.hamcrest.Matchers;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.LIST;
 import static org.hamcrest.Matchers.equalTo;
 
 @ExtendWith(SerenityJUnit5Extension.class)
@@ -59,6 +54,7 @@ class WhenSearchingForUsers {
             System.out.println(userEmails.get(0));
 
             assertThat(userEmails).doesNotHaveDuplicates();
+            assertThat(userEmails).allMatch(email -> email.endsWith("@reqres.in"));
             }
             /*
             1- The string "\n" appends a line break at the end of the output.
