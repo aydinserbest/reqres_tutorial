@@ -16,7 +16,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <serenity.version>4.1.3</serenity.version>
-        <junit5.version>5.8.2</junit5.version>
+        <junit5.version>5.10.2</junit5.version>
         <tags></tags>
         <webdriver.base.url></webdriver.base.url>
     </properties>
@@ -69,6 +69,13 @@
             <version>3.22.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
