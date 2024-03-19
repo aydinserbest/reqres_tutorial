@@ -1,5 +1,7 @@
 package reqres.users;
 
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import net.serenitybdd.rest.SerenityRest;
 import org.junit.jupiter.api.DisplayName;
@@ -42,6 +44,17 @@ class WhenSearchingForUsers_With_SerenityRest {
                     .body("page", equalTo(1))
                     .body("per_page", equalTo(6))
                     .body("total_pages", equalTo(2));
+        }
+        @Test
+        @DisplayName("should show the output in pretty format")
+        void prettyOutput() {
+            //Response response = SerenityRest.get("https://reqres.in/api/users");
+            RestAssured.get("https://reqres.in/api/users").prettyPrint();
+
+             Response response = RestAssured.get("https://reqres.in/api/users");
+           // System.out.println(response.asString());
+            System.out.println(response.asPrettyString());
+
         }
     }
 }
