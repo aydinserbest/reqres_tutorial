@@ -1,7 +1,6 @@
 package bddTraders;
 
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,16 +9,17 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.equalTo;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
 
 public class Refactor_GettingCompany_Details {
     @BeforeEach
     public void setup_Rest_config() {
-        RestAssured.baseURI = "http://localhost:9000/api";
+        baseURI = "http://localhost:9000/api";
     }
     @Test
     public void getCompanyDetails() {
-        RestAssured.get("/stock/aapl/company")
+        get("/stock/aapl/company")
                 .then().statusCode(200)
                 .body("companyName", equalTo("Apple, Inc."))
                 .body("sector", equalTo("Electronic Technology"));
@@ -27,7 +27,7 @@ public class Refactor_GettingCompany_Details {
     @Test
     @DisplayName("using path param")
     public void getCompanyDetails2() {
-        RestAssured.given()
+        given()
                 .pathParam("symbol", "aapl")
                 .when().get("/stock/{symbol}/company")
                 .then()
@@ -37,8 +37,7 @@ public class Refactor_GettingCompany_Details {
     @Test
     @DisplayName("using path param short version - add path param to get method")
     public void getCompanyDetails3() {
-        RestAssured
-                .get("/stock/{symbol}/company", "aapl")
+        get("/stock/{symbol}/company", "aapl")
                 .then()
                 .statusCode(200)
                 .body("companyName", equalTo("Apple, Inc."));
@@ -49,23 +48,28 @@ public class Refactor_GettingCompany_Details {
     @Test
     @DisplayName("using query param")
     public void getCompanyDetails4() {
-        Response response = RestAssured
-                .given()
+        Response response = given()
                 .queryParam("symbols", "fb")
                 .when().get("/news");
 
-        List<Map<String, Object>> data = response.getBody().jsonPath().getList("$");
-
-        response.then().statusCode(200);
-        response.prettyPrint();
+        response.then().statusCode(200)
+                .body("related", everyItem(containsString("FB")));
+       // response.prettyPrint();
+        //List<Map<String, Object>> data = response.getBody().jsonPath().getList("$");
     }
     @Test
     public void getCompanyDetails5() {
-        Response data = RestAssured
-                .get("https://reqres.in/api/users");
+        Response data = get("https://reqres.in/api/users");
         System.out.println(data.asPrettyString());
 
         List<Map<String, Object>> data2 = data.getBody().jsonPath().get("data");
-
+    }
+    @Test
+    @DisplayName("using static import for RestAssured")
+    public void staticRestAssured(){
+        //import static io.restassured.RestAssured.*;
+        given().get("https://reqres.in/api/users")
+                .then()
+                .statusCode(200);
     }
 }
