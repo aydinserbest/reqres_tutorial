@@ -20,3 +20,20 @@ Instead, you should create a new record object.
 To overcome this situation or the immutability feature of record,
 you can use a traditional POJO (Plain Old Java Object) instead of record
  */
+
+/*
+    In the Trader application that we used as an API in our test,
+    when registering a new customer,
+    we do not define the id field in the JSON payload we send.
+    Therefore, we might not initially include the id field in our Client record.
+    However, the API assigns an id in the response,
+    and if this field is not declared in the Client record, we will end up with a deserialization error.
+    For this reason, we added it as a field to the Client record
+    and carried out the following steps to handle its definition:
+         1-We added a constructor to our Client record. This constructor takes all the other fields
+    except for id and assigns the id a default value of 0.
+         2-We created a Client record that contains the fields firstName, lastName, email, and id.
+         3-We added a constructor that does not take an id. This constructor assigns a default value of 0 to the id field.
+    Thanks to these modifications, we can create a new Client object without an id field and,
+    when the response comes back, we can avoid deserialization errors because the id field is included in our object.
+ */
