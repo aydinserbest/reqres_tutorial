@@ -1,12 +1,14 @@
 package bddTraders;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.equalTo;
 
 public class WhenDeletingAClient {
     @BeforeEach
@@ -57,6 +59,7 @@ public class WhenDeletingAClient {
     }
 
     @Test
+    @DisplayName("using Map.of to create client and getString method for id ")
     public void deleteClient_Refactor() {
         Map<String, Object> client = Map.of("firstName", "michael", "lastName", "white", "email", "blue@gmail.com");
 
@@ -78,8 +81,74 @@ public class WhenDeletingAClient {
                 .then().statusCode(404);
 
     }
+    @Test
+    @DisplayName("using Map to create client and put method to update client")
+    public void should_be_able_to_update(){
+        Map<String, Object> client = new HashMap<>();
+        client.put("firstName", "michael");
+        client.put("lastName", "white");
+        client.put("email", "blue@gmail.com");
+        //given a client exists
+        String id = getString(client);
+        //when i update the email address of a client
+        client.put("email", "red@gmail.com");
+        given().pathParam("id", id)
+                .contentType("application/json")
+                .body(client)
+                .when().put("/client/{id}")
+                .then().statusCode(200);
+
+        given().get("/client/{id}", id)
+                .then()
+                .body("email", equalTo("red@gmail.com"));
+    }
+    @Test
+    @DisplayName("using setter to update ClientAsClassType object")
+    public void should_be_able_to_update2(){
+        ClientAsClassType client = new ClientAsClassType("michael", "white", "blue@gmail.com");
+        //given a client exists
+        String id = getString(client);
+        //when i update the email address of a client
+        client.setEmail("red@gmail.com");
+        given().pathParam("id", id)
+                .contentType("application/json")
+                .body(client)
+                .when().put("/client/{id}")
+                .then().statusCode(200);
+
+        given().get("/client/{id}", id)
+                .then()
+                .body("email", equalTo("red@gmail.com"));
+
+    }
+    @Test
+    @DisplayName("using Map to update ClientAsClassType object")
+    public void should_be_able_to_update3(){
+        ClientAsClassType client = new ClientAsClassType("michael", "white", "blue@gmail.com");
+        //given a client exists
+        String id = getString(client);
+        //when i update the email address of a client
+        Map<String, Object> clientUpdate = new HashMap<>();
+        clientUpdate.put("email", "red@gmail.com");
+        given().pathParam("id", id)
+                .contentType("application/json")
+                .body(clientUpdate)
+                .when().put("/client/{id}")
+                .then().statusCode(200);
+
+        given().get("/client/{id}", id)
+                .then()
+                .body("email", equalTo("red@gmail.com"));
+
+    }
 
     private static String getString(Map<String, Object> client) {
+        return given().contentType("application/json")
+                .body(client)
+                .when().post("/client")
+                .jsonPath().getString("id");
+    }
+    private static String getString(ClientAsClassType client) {
         return given().contentType("application/json")
                 .body(client)
                 .when().post("/client")
