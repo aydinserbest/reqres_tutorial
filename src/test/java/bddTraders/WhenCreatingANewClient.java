@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 
 public class WhenCreatingANewClient {
 
@@ -26,12 +28,17 @@ public class WhenCreatingANewClient {
                 .header("Content-Type", "application/json")
                 .when().post("/client")
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .and().body("id", not(equalTo(0)));
     }
     /*
     if we do not mention that we are sending json data with:
     contentType("application/json")
     it gives 415 error code
-
+     */
+    /*
+    not and equalTo should come from Matchers.hamcrest
+    from the same library
+    if one comes from a different library it gives error
      */
 }
