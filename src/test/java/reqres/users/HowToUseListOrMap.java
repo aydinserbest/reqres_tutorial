@@ -24,6 +24,14 @@ class HowToUseListOrMap {
         void assignData() {
             // 1-
             List<Map<String, String>> users = SerenityRest.get("https://reqres.in/api/users").jsonPath().get("data");
+                // OR
+            // List<Map<String, String>> users2 = SerenityRest.get("https://reqres.in/api/users").jsonPath().getList("data");
+                    // OR
+            /*
+            List<Map<String, String>> users2 =
+                    SerenityRest.get("https://reqres.in/api/users").then().extract().body().as(List.class);
+
+             */
             assertThat(users).hasSize(6);
 
             // 2-
