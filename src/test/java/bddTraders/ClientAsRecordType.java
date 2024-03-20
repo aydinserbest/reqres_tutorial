@@ -1,7 +1,7 @@
 package bddTraders;
 
-public record Client(String firstName, String lastName, String email, int id) {
-    public Client (String firstName, String lastName, String email) {
+public record ClientAsRecordType(String firstName, String lastName, String email, int id) {
+    public ClientAsRecordType(String firstName, String lastName, String email) {
         this(firstName, lastName, email, 0);
     }
 }
