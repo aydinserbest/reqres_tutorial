@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.get;
-
 public class ExamplesOfReturnsTest {
 
     @Test

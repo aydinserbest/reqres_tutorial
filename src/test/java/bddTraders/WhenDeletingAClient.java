@@ -10,6 +10,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 
+@DisplayName("when deleting a client")
 public class WhenDeletingAClient {
     @BeforeEach
     public void setupBaseURI() {

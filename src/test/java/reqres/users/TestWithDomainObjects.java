@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("Test with domain objects")
 public class TestWithDomainObjects {
     @Test
     @DisplayName("should get response with domain objects")

@@ -1,10 +1,12 @@
 package bddTraders;
 
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
+@DisplayName("Getting Company Details")
 public class WhenGettingCompanyDetails {
     @Test
     void getCompanyDetails() {
