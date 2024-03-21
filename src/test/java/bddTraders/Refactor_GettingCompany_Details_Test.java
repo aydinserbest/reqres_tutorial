@@ -2,9 +2,11 @@ package bddTraders;
 
 
 import io.restassured.response.Response;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,8 @@ import java.util.Map;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-public class Refactor_GettingCompany_Details {
+@ExtendWith(SerenityJUnit5Extension.class)
+public class Refactor_GettingCompany_Details_Test {
     @BeforeEach
     public void setup_Rest_config() {
         baseURI = "http://localhost:9000/api";

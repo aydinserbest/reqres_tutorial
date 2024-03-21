@@ -56,11 +56,11 @@ class WhenSearchingForUsers {
         @DisplayName("should return the correct page numbers and pagination details")
         void checkPagination2(){
             // all data-all json arrays into List<Map<String, Object>>
-            List<Map<String, String>> data = RestAssured.get("https://reqres.in/api/users").jsonPath().get("data");
-            for (Map<String, String > user : data) {
-                String firstName = user.get("first_name");
-                String lastName = user.get("last_name");
-                String id = user.get("id");
+            List<Map<String, Object>> data = RestAssured.get("https://reqres.in/api/users").jsonPath().get("data");
+            for (Map<String, Object > user : data) {
+                String firstName = (String)user.get("first_name");
+                String lastName = (String)user.get("last_name");
+                int id = (Integer)user.get("id");
                 String email = (String) user.get("email");
 
                 System.out.printf("User %s %s (ID: %s) has email: %s\n", firstName, lastName, id, email);

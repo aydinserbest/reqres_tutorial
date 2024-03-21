@@ -1,4 +1,4 @@
-package bddTraders;
+package reqres.users;
 
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.get;
 
-public class ExamplesOfReturns {
+public class ExamplesOfReturnsTest {
 
     @Test
     public void getTopTrades(){
@@ -24,7 +24,7 @@ public class ExamplesOfReturns {
                 .body().jsonPath().get("$");
         System.out.println(data2.get(0));
         Object symbol = data2.get(0).get("symbol");
-        String name = data2.get(0).get("name").toString();
+        String name = data2.get(0).get("symbol").toString();
         //or
         String name2 = symbol.toString();
         //or

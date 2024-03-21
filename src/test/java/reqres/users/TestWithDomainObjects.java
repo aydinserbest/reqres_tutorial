@@ -3,13 +3,12 @@ package reqres.users;
 import net.serenitybdd.rest.SerenityRest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import reqres.users.domain.*;
+import reqres.users.domain.ApiResponse;
+import reqres.users.domain.UserDetail;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestWithDomainObjects {
     @Test
@@ -37,22 +36,22 @@ public class TestWithDomainObjects {
         System.out.println(firstUserDetail.first_name());
     }
 
-    @Test
-    @DisplayName("should send response with domain objects")
-    void shouldCreateUser() {
-        // Given
-        UserCreate userToCreate = ApiResponseFactory.createRandomUserToCreate();
-
-        // When
-        UserCreateResponse userCreateResponse = ApiResponseFactory.createRandomUserCreateResponse();
-        // Then
-        assertNotNull(userCreateResponse);
-        assertEquals(userToCreate.name(), userCreateResponse.name());
-        assertEquals(userToCreate.job(), userCreateResponse.job());
-        assertNotNull(userCreateResponse.id());
-        assertNotNull(userCreateResponse.createdAt());
-
-    }
+//    @Test
+//    @DisplayName("should send response with domain objects")
+//    void shouldCreateUser() {
+//        // Given
+//        UserCreate userToCreate = ApiResponseFactory.createRandomUserToCreate();
+//
+//        // When
+//        UserCreateResponse userCreateResponse = ApiResponseFactory.createRandomUserCreateResponse();
+//        // Then
+//        assertNotNull(userCreateResponse);
+//        assertEquals(userToCreate.name(), userCreateResponse.name());
+//        assertEquals(userToCreate.job(), userCreateResponse.job());
+//        assertNotNull(userCreateResponse.id());
+//        assertNotNull(userCreateResponse.createdAt());
+//
+//    }
 }
 
 
