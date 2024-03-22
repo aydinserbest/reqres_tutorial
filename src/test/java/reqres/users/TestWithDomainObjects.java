@@ -1,8 +1,10 @@
 package reqres.users;
 
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import net.serenitybdd.rest.SerenityRest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import reqres.users.domain.ApiResponse;
 import reqres.users.domain.UserDetail;
 
@@ -10,6 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 @DisplayName("Test with domain objects")
 public class TestWithDomainObjects {
     @Test

@@ -1,8 +1,10 @@
 package bddTraders;
 
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 @DisplayName("when deleting a client")
 public class WhenDeletingAClient {
     @BeforeEach

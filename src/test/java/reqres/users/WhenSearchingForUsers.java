@@ -1,15 +1,19 @@
 package reqres.users;
 
 import io.restassured.RestAssured;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+
+@ExtendWith(SerenityJUnit5Extension.class)
 class WhenSearchingForUsers {
 
 

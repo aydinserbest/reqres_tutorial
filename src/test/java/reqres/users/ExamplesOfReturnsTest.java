@@ -1,11 +1,15 @@
 package reqres.users;
 
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.get;
+
+@ExtendWith(SerenityJUnit5Extension.class)
 public class ExamplesOfReturnsTest {
 
     @Test

@@ -1,25 +1,30 @@
 package bddTraders;
 
 
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
+import net.serenitybdd.rest.SerenityRest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 import java.util.Map;
 
-import static io.restassured.RestAssured.*;
+import static net.serenitybdd.rest.SerenityRest.given;
 import static org.hamcrest.Matchers.*;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class Refactor_GettingCompany_Details_Test {
     @BeforeEach
     public void setup_Rest_config() {
-        baseURI = "http://localhost:9000/api";
+        RestAssured.baseURI = "http://localhost:9000/api";
     }
     @Test
     public void getCompanyDetails() {
-        get("/stock/aapl/company")
+        SerenityRest.get("/stock/aapl/company")
                 .then().statusCode(200)
                 .body("companyName", equalTo("Apple, Inc."))
                 .body("sector", equalTo("Electronic Technology"));
@@ -37,7 +42,7 @@ public class Refactor_GettingCompany_Details_Test {
     @Test
     @DisplayName("using path param short version - add path param to get method")
     public void getCompanyDetails3() {
-        get("/stock/{symbol}/company", "aapl")
+        SerenityRest.get("/stock/{symbol}/company", "aapl")
                 .then()
                 .statusCode(200)
                 .body("companyName", equalTo("Apple, Inc."));
@@ -59,8 +64,8 @@ public class Refactor_GettingCompany_Details_Test {
     }
     @Test
     public void getCompanyDetails5() {
-        Response data = get("https://reqres.in/api/users");
-        System.out.println(data.asPrettyString());
+        Response data = SerenityRest.get("https://reqres.in/api/users");
+       // System.out.println(data.asPrettyString());
 
         List<Map<String, Object>> data2 = data.getBody().jsonPath().get("data");
     }

@@ -1,11 +1,14 @@
 package bddTraders;
 
 import io.restassured.RestAssured;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.hamcrest.Matchers.equalTo;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 @DisplayName("Getting Company Details")
 public class WhenGettingCompanyDetails {
     @Test
