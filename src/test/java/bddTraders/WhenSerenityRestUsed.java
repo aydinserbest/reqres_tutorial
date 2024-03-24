@@ -50,7 +50,7 @@ public class WhenSerenityRestUsed {
 
         //store id
         String id = SerenityRest.lastResponse().jsonPath().get("id").toString();
-
+        System.out.println(id);
         //delete the client
         delete("/client/{id}", id);
         //check the status code 404

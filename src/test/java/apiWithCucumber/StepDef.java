@@ -1,19 +1,19 @@
 package apiWithCucumber;
 
+import bddTraders.ClientAsClassType;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import org.junit.Before;
 
-import java.util.List;
 import java.util.Map;
 
-import static io.restassured.RestAssured.given;
 import static net.serenitybdd.rest.SerenityRest.delete;
-
+import static net.serenitybdd.rest.SerenityRest.given;
 
 
 public class StepDef {
@@ -23,16 +23,21 @@ public class StepDef {
     }
     String id;
     @Given("a client exists with the following details")
-    public void aClientExistsWithTheFollowingDetails(DataTable dataTable) {
-        List<Map<String, String>> clientDetails = dataTable.asMaps(String.class, String.class);
-        Map<String, String> client = clientDetails.get(0);
-        System.out.println(client.get("email"));
+    public void aClientExistsWithTheFollowingDetai(DataTable dataTable) {
 
-        given().contentType("application/json")
+        Map<String, String> clientDetailsMap = dataTable.asMaps(String.class, String.class).get(0);
+
+        ClientAsClassType client = new ClientAsClassType();
+        client.setFirstName(clientDetailsMap.get("firstName"));
+        client.setLastName(clientDetailsMap.get("lastName"));
+        client.setEmail(clientDetailsMap.get("email"));
+        Response res = given().contentType("application/json")
                 .body(client)
                 .when().post("/client");
-        id = SerenityRest.lastResponse().jsonPath().get("id").toString();
-    }
+
+        System.out.println("Response: " + res.asString());
+
+        id = SerenityRest.lastResponse().jsonPath().getString("id"); }
     @When("I delete the client")
     public void iDeleteTheClient() {
         delete("/client/{id}", id);
