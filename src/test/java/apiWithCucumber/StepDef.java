@@ -1,15 +1,17 @@
 package apiWithCucumber;
 
-import bddTraders.ClientAsClassType;
+import bddTraders.ClientAsRecordType;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.Before;
+import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
-import org.junit.Before;
 
+import java.util.List;
 import java.util.Map;
 
 import static net.serenitybdd.rest.SerenityRest.delete;
@@ -17,22 +19,29 @@ import static net.serenitybdd.rest.SerenityRest.given;
 
 
 public class StepDef {
+    String id;
     @Before
     public void setUp() {
         RestAssured.baseURI = "http://localhost:9000/api";
     }
-    String id;
+
+
+    @DataTableType
+    public ClientAsRecordType clientAsRecordType(Map<String, String> entry) {
+        return new ClientAsRecordType(
+                entry.get("firstName"),
+                entry.get("lastName"),
+                entry.get("email")
+        );
+    }
     @Given("a client exists with the following details")
-    public void aClientExistsWithTheFollowingDetai(DataTable dataTable) {
+    public void aClientExistsWithTheFollowingDetails(DataTable dataTable) {
+        //ClientAsRecordType client = dataTable.asList(ClientAsRecordType.class).get(0);
+        List<ClientAsRecordType> client = dataTable.asList(ClientAsRecordType.class);
 
-        Map<String, String> clientDetailsMap = dataTable.asMaps(String.class, String.class).get(0);
 
-        ClientAsClassType client = new ClientAsClassType();
-        client.setFirstName(clientDetailsMap.get("firstName"));
-        client.setLastName(clientDetailsMap.get("lastName"));
-        client.setEmail(clientDetailsMap.get("email"));
         Response res = given().contentType("application/json")
-                .body(client)
+                .body(client.get(0))
                 .when().post("/client");
 
         System.out.println("Response: " + res.asString());

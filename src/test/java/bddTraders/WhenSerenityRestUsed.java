@@ -22,6 +22,7 @@ public class WhenSerenityRestUsed {
     @BeforeEach
     public void setup_Rest_config() {
         RestAssured.baseURI = "http://localhost:9000/api";
+        System.out.println(RestAssured.baseURI);
     }
     @Test
     public void getCompanyDetails() {

@@ -2,10 +2,10 @@ package apiWithCucumber;
 
 
 import io.cucumber.junit.CucumberOptions;
-import io.cucumber.junit.CucumberSerenityRunner;
+import net.serenitybdd.cucumber.CucumberWithSerenity;
 import org.junit.runner.RunWith;
 
-@RunWith(CucumberSerenityRunner.class)
+@RunWith(CucumberWithSerenity.class)
 @CucumberOptions(features = "src/test/resources/features",
 glue = "apiWithCucumber")
 public class CucumberTestSuite {
